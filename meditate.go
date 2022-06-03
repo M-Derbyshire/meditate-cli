@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/M-Derbyshire/meditate-cli/help"
+	"github.com/M-Derbyshire/meditate-cli/commands"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	if len(args) > 0 {
 
 		if args[0] == "help" {
-			helpText := help.GetHelpText()
+			helpText := commands.GetHelpText()
 			fmt.Println(helpText)
 		}
 

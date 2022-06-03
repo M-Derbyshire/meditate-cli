@@ -1,4 +1,4 @@
-package help
+package commands
 
 func GetHelpText() string {
 	t := `Meditate CLI:
