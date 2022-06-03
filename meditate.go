@@ -14,7 +14,7 @@ func main() {
 	if len(args) > 0 {
 
 		if args[0] == "help" {
-			helpText := commands.GetHelpText()
+			helpText := commands.Help()
 			fmt.Println(helpText)
 		}
 
