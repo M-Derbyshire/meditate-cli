@@ -1,7 +1,7 @@
 package commands
 
 func GetHelpText() string {
-	t := `Meditate CLI:
+	t := `Meditate CLI - V1.0.0
 	
 Meditate CLI allows you to create a list of words/concepts, that the application can then choose from for you at a later time. The idea is that you can recieve a random word/concept to meditate, reflect, and/or pray on.
 
