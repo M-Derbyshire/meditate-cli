@@ -33,7 +33,7 @@ func RemoveFirstInstance(list []string, itemToRemove string) []string {
 		}
 	}
 
-	//If we've not returned a match, return original array
+	//If we've not found a match, return original array
 	//Otherwise, the last item will either be the match, or will have been copied to the position before it (so ignore the last index)
 	if !matchFound {
 		return list
