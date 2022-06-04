@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// Append to or replace list in file. isAppending parameter determines whether the file is added to, or whether the contents are replaced
 func writeTofile(list []string, file *os.File, isAppending bool) error {
 	w := bufio.NewWriter(file)
 
@@ -26,6 +27,7 @@ func writeTofile(list []string, file *os.File, isAppending bool) error {
 	return w.Flush()
 }
 
+// Load the contents from a file, as a slice of strings
 func LoadListFromFile(path string) ([]string, error) {
 
 	file, err := os.OpenFile(path, os.O_CREATE, 0644)
@@ -43,6 +45,7 @@ func LoadListFromFile(path string) ([]string, error) {
 	return list, scanner.Err()
 }
 
+// Replace the contents in a file, as a slice of strings
 func ReplaceListInFile(path string, list []string) error {
 
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_TRUNC, 0755)
@@ -54,6 +57,7 @@ func ReplaceListInFile(path string, list []string) error {
 	return writeTofile(list, file, false)
 }
 
+// Append to the contents of a file, as a slice of strings
 func AppendToListInFile(path string, newItems []string) error {
 
 	fileIsNotNew := true
