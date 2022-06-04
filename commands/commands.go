@@ -1,5 +1,6 @@
 package commands
 
+// Get the help text for the application
 func Help() string {
 	t := `Meditate CLI - V1.0.0
 	
