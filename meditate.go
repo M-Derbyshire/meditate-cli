@@ -24,6 +24,14 @@ func main() {
 			resultText, err = commands.List(listFilePath)
 		}
 
+		if args[0] == "search" {
+			if len(args) < 2 {
+				resultText = "Please provide a substring to be searched for"
+			} else {
+				resultText, err = commands.Search(listFilePath, args[1])
+			}
+		}
+
 	}
 
 	if err != nil {
