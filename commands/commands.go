@@ -56,3 +56,25 @@ func Search(listFilePath, substringToFind string) (string, error) {
 
 	return strings.Join(results, "\n"), nil
 }
+
+// Add an item to the list. Result text will be a message saying that the item was added.
+//If the item already exists (case insensitive), an error will be returned stating that
+func Add(listFilePath, newItem string) (string, error) {
+
+	currentList, loadErr := listFile.LoadListFromFile(listFilePath)
+	if loadErr != nil {
+		return "", errors.New("Error while loading list: " + loadErr.Error())
+	}
+
+	if strList.Contains(currentList, newItem) {
+		return "", errors.New("The given item already exists in the list")
+	}
+
+	writeErr := listFile.AppendToListInFile(listFilePath, []string{newItem})
+	if writeErr != nil {
+		return "", errors.New("Error while adding item to list: " + writeErr.Error())
+	}
+
+	return "Item added to list", nil
+
+}

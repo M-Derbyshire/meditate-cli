@@ -32,6 +32,14 @@ func main() {
 			}
 		}
 
+		if args[0] == "add" {
+			if len(args) < 2 {
+				resultText = "Please provide an item to be added to the list"
+			} else {
+				resultText, err = commands.Add(listFilePath, args[1])
+			}
+		}
+
 	}
 
 	if err != nil {
