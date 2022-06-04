@@ -11,6 +11,16 @@ import (
 func writeTofile(list []string, file *os.File, isAppending bool) error {
 	w := bufio.NewWriter(file)
 
+	fileInfo, err := file.Stat()
+	if err != nil {
+		return err
+	}
+
+	//If file is empty, and we're appending, there is still technically the first line to think about. Therefore if file is empty, don't append
+	if fileInfo.Size() == 0 {
+		isAppending = false
+	}
+
 	if isAppending {
 		fmt.Fprint(w, "\n")
 	}
