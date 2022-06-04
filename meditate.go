@@ -18,6 +18,7 @@ func main() {
 	//The list file needs to be in the same directory as the executable, not in the current console location
 	executablePath, err := os.Executable()
 	listFilePath := filepath.Join(filepath.Dir(executablePath), "meditate_list")
+	// listFilePath = "test.txt"
 
 	if err == nil { //If we have successfully loaded the file path for the list
 
@@ -44,6 +45,14 @@ func main() {
 					resultText = "Please provide an item to be added to the list"
 				} else {
 					resultText, err = commands.Add(listFilePath, args[1])
+				}
+			}
+
+			if args[0] == "remove" {
+				if len(args) < 2 {
+					resultText = "Please provide an item to be removed from the list"
+				} else {
+					resultText, err = commands.Remove(listFilePath, args[1])
 				}
 			}
 

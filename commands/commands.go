@@ -58,7 +58,7 @@ func Search(listFilePath, substringToFind string) (string, error) {
 }
 
 // Add an item to the list. Result text will be a message saying that the item was added.
-//If the item already exists (case insensitive), an error will be returned stating that
+// If the item already exists (case insensitive), an error will be returned stating that
 func Add(listFilePath, newItem string) (string, error) {
 
 	currentList, loadErr := listFile.LoadListFromFile(listFilePath)
@@ -77,4 +77,29 @@ func Add(listFilePath, newItem string) (string, error) {
 
 	return "Item added to list", nil
 
+}
+
+// Remove an item from the list (case sensitive). Result text will be a message saying that the item was removed.
+// If the item isn't found, an error will be returned stating that.
+// This will only remove the first instance, but we don't allow duplicates
+func Remove(listFilePath, itemToRemove string) (string, error) {
+
+	list, loadErr := listFile.LoadListFromFile(listFilePath)
+	if loadErr != nil {
+		return "", errors.New("Error while loading list: " + loadErr.Error())
+	}
+
+	listOriginalLen := len(list)
+
+	list = strList.RemoveFirstInstance(list, itemToRemove)
+	if len(list) >= listOriginalLen {
+		return "", errors.New("Item was not found in list")
+	}
+
+	writeErr := listFile.ReplaceListInFile(listFilePath, list)
+	if writeErr != nil {
+		return "", errors.New("Error while saving list: " + writeErr.Error())
+	}
+
+	return "Item removed from list", nil
 }
