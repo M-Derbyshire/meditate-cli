@@ -1,5 +1,13 @@
 package commands
 
+import (
+	"errors"
+	"sort"
+	"strings"
+
+	"github.com/M-Derbyshire/meditate-cli/listFile"
+)
+
 // Get the help text for the application
 func Help() string {
 	t := `Meditate CLI - V1.0.0
@@ -17,4 +25,17 @@ No arguments - Returns a randomly selected item from your list. The randomness o
 Created by Matthew Stuart Derbyshire - md-developer.uk`
 
 	return t
+}
+
+// Get the full list (as a single string), in alphabetical order, seperated by new-lines.
+func List(path string) (string, error) {
+
+	list, err := listFile.LoadListFromFile(path)
+	if err != nil {
+		return "", errors.New("Error while loading list: " + err.Error())
+	}
+
+	sort.Strings(list)
+
+	return strings.Join(list, "\n"), nil
 }
