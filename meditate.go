@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/M-Derbyshire/meditate-cli/commands"
 )
@@ -23,15 +24,15 @@ func main() {
 
 		if len(args) > 0 {
 
-			if args[0] == "help" {
+			if strings.EqualFold(args[0], "help") {
 				resultText = commands.Help()
 			}
 
-			if args[0] == "list" {
+			if strings.EqualFold(args[0], "list") {
 				resultText, err = commands.List(listFilePath)
 			}
 
-			if args[0] == "search" {
+			if strings.EqualFold(args[0], "search") {
 				if len(args) < 2 {
 					resultText = "Please provide a substring to be searched for"
 				} else {
@@ -39,7 +40,7 @@ func main() {
 				}
 			}
 
-			if args[0] == "add" {
+			if strings.EqualFold(args[0], "add") {
 				if len(args) < 2 {
 					resultText = "Please provide an item to be added to the list"
 				} else {
@@ -47,7 +48,7 @@ func main() {
 				}
 			}
 
-			if args[0] == "remove" {
+			if strings.EqualFold(args[0], "remove") {
 				if len(args) < 2 {
 					resultText = "Please provide an item to be removed from the list"
 				} else {
