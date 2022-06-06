@@ -11,7 +11,7 @@ import (
 	"github.com/M-Derbyshire/meditate-cli/strList"
 )
 
-// Get the help text for the application
+// Help returns the help text for the application
 func Help() string {
 	t := `Meditate CLI - V1.0.0
 	
@@ -30,7 +30,7 @@ Created by Matthew Stuart Derbyshire - md-developer.uk`
 	return t
 }
 
-// Get the full list (as a single string), in alphabetical order, seperated by new-lines.
+// List returns the full list (as a single string), in alphabetical order, seperated by new-lines.
 func List(path string) (string, error) {
 
 	list, err := listFile.LoadListFromFile(path)
@@ -43,7 +43,7 @@ func List(path string) (string, error) {
 	return strings.Join(list, "\n"), nil
 }
 
-// Get any items from the list (as a single string), that contain the given substring. Values will be ordered by length, and seperated with line breaks
+// Search returns any items from the list (as a single string), that contain the given substring. Values will be ordered by length, and seperated with line breaks
 func Search(listFilePath, substringToFind string) (string, error) {
 
 	fullList, err := listFile.LoadListFromFile(listFilePath)
@@ -59,7 +59,7 @@ func Search(listFilePath, substringToFind string) (string, error) {
 	return strings.Join(results, "\n"), nil
 }
 
-// Add an item to the list. Result text will be a message saying that the item was added.
+// Add will add an item to the list. Result text will be a message saying that the item was added.
 // If the item already exists (case insensitive), an error will be returned stating that
 func Add(listFilePath, newItem string) (string, error) {
 
@@ -81,7 +81,7 @@ func Add(listFilePath, newItem string) (string, error) {
 
 }
 
-// Remove an item from the list (case sensitive). Result text will be a message saying that the item was removed.
+// Remove will remove an item from the list (case sensitive). Result text will be a message saying that the item was removed.
 // If the item isn't found, an error will be returned stating that.
 // This will only remove the first instance, but we don't allow duplicates
 func Remove(listFilePath, itemToRemove string) (string, error) {
@@ -106,7 +106,7 @@ func Remove(listFilePath, itemToRemove string) (string, error) {
 	return "Item removed from list", nil
 }
 
-// Pick an item from the list. This is a random choice, but the randomness is "weighted" in a way that favours items near the top of the list.
+// Choose will pick an item from the list. This is a random choice, but the randomness is "weighted" in a way that favours items near the top of the list.
 // If very few items are in the list, the one at the top of the list will be returned.
 // Once an item is chosen, it will be moved to the bottom of the list.
 func Choose(listFilePath string) (string, error) {
