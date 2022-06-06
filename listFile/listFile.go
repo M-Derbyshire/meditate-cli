@@ -1,4 +1,4 @@
-package listFile
+package listfile
 
 import (
 	"bufio"

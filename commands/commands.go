@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/M-Derbyshire/meditate-cli/listFile"
+	"github.com/M-Derbyshire/meditate-cli/listfile"
 	"github.com/M-Derbyshire/meditate-cli/strList"
 )
 
@@ -33,7 +33,7 @@ Created by Matthew Stuart Derbyshire - md-developer.uk`
 // List returns the full list (as a single string), in alphabetical order, seperated by new-lines.
 func List(path string) (string, error) {
 
-	list, err := listFile.LoadListFromFile(path)
+	list, err := listfile.LoadListFromFile(path)
 	if err != nil {
 		return "", errors.New("Error while loading list: " + err.Error())
 	}
@@ -44,9 +44,9 @@ func List(path string) (string, error) {
 }
 
 // Search returns any items from the list (as a single string), that contain the given substring. Values will be ordered by length, and seperated with line breaks
-func Search(listFilePath, substringToFind string) (string, error) {
+func Search(listfilePath, substringToFind string) (string, error) {
 
-	fullList, err := listFile.LoadListFromFile(listFilePath)
+	fullList, err := listfile.LoadListFromFile(listfilePath)
 	if err != nil {
 		return "", errors.New("Error while loading list: " + err.Error())
 	}
@@ -61,9 +61,9 @@ func Search(listFilePath, substringToFind string) (string, error) {
 
 // Add will add an item to the list. Result text will be a message saying that the item was added.
 // If the item already exists (case insensitive), an error will be returned stating that
-func Add(listFilePath, newItem string) (string, error) {
+func Add(listfilePath, newItem string) (string, error) {
 
-	currentList, loadErr := listFile.LoadListFromFile(listFilePath)
+	currentList, loadErr := listfile.LoadListFromFile(listfilePath)
 	if loadErr != nil {
 		return "", errors.New("Error while loading list: " + loadErr.Error())
 	}
@@ -72,7 +72,7 @@ func Add(listFilePath, newItem string) (string, error) {
 		return "", errors.New("The given item already exists in the list")
 	}
 
-	writeErr := listFile.AppendToListInFile(listFilePath, []string{newItem})
+	writeErr := listfile.AppendToListInFile(listfilePath, []string{newItem})
 	if writeErr != nil {
 		return "", errors.New("Error while adding item to list: " + writeErr.Error())
 	}
@@ -84,9 +84,9 @@ func Add(listFilePath, newItem string) (string, error) {
 // Remove will remove an item from the list (case sensitive). Result text will be a message saying that the item was removed.
 // If the item isn't found, an error will be returned stating that.
 // This will only remove the first instance, but we don't allow duplicates
-func Remove(listFilePath, itemToRemove string) (string, error) {
+func Remove(listfilePath, itemToRemove string) (string, error) {
 
-	list, loadErr := listFile.LoadListFromFile(listFilePath)
+	list, loadErr := listfile.LoadListFromFile(listfilePath)
 	if loadErr != nil {
 		return "", errors.New("Error while loading list: " + loadErr.Error())
 	}
@@ -98,7 +98,7 @@ func Remove(listFilePath, itemToRemove string) (string, error) {
 		return "", errors.New("Item was not found in list")
 	}
 
-	writeErr := listFile.ReplaceListInFile(listFilePath, list)
+	writeErr := listfile.ReplaceListInFile(listfilePath, list)
 	if writeErr != nil {
 		return "", errors.New("Error while saving list: " + writeErr.Error())
 	}
@@ -109,12 +109,12 @@ func Remove(listFilePath, itemToRemove string) (string, error) {
 // Choose will pick an item from the list. This is a random choice, but the randomness is "weighted" in a way that favours items near the top of the list.
 // If very few items are in the list, the one at the top of the list will be returned.
 // Once an item is chosen, it will be moved to the bottom of the list.
-func Choose(listFilePath string) (string, error) {
+func Choose(listfilePath string) (string, error) {
 
 	var choice string
 	var maxChoiceNum uint16 // To be compared against a random number, to determine if an item should be chosen
 
-	list, loadErr := listFile.LoadListFromFile(listFilePath)
+	list, loadErr := listfile.LoadListFromFile(listfilePath)
 	if loadErr != nil {
 		return "", errors.New("Error while loading list: " + loadErr.Error())
 	}
@@ -153,7 +153,7 @@ func Choose(listFilePath string) (string, error) {
 	}
 
 	list = strList.MoveToEnd(list, choice)
-	saveErr := listFile.ReplaceListInFile(listFilePath, list)
+	saveErr := listfile.ReplaceListInFile(listfilePath, list)
 	if saveErr != nil {
 		return "", errors.New("Error while saving list: " + loadErr.Error())
 	}
