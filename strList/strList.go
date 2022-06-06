@@ -2,8 +2,8 @@ package strlist
 
 import "strings"
 
+// Contains returns true if the given item exists in the given list. Returns false otherwise
 // This is case-insensitive
-// Returns true if the given item exists in the given list. Returns false otherwise
 func Contains(list []string, itemToFind string) bool {
 	for _, item := range list {
 		if strings.EqualFold(item, itemToFind) {
@@ -14,9 +14,9 @@ func Contains(list []string, itemToFind string) bool {
 	return false
 }
 
+// RemoveFirstInstance retuns a copy of the given slice, with the first instance of the given item removed.
+// If item isn't found, returns original list.
 // This is case-insensitive
-// Returns a copy of the given slice, with the first instance of the given item removed
-// If item isn't found, returns original list
 func RemoveFirstInstance(list []string, itemToRemove string) []string {
 
 	matchFound := false
@@ -41,9 +41,9 @@ func RemoveFirstInstance(list []string, itemToRemove string) []string {
 	return list[:len(list)-1]
 }
 
+// MoveToEnd returns a copyof the given slice, with the first instance of the given item moved to the end of the slice.
+// If item isn't found, returns original list.
 // This is case-insensitive
-// Returns a copy of the given slice, with the first instance of the given item moved to the end of the slice
-// If item isn't found, returns original list
 func MoveToEnd(list []string, itemToMove string) []string {
 
 	listOriginalLen := len(list)
@@ -57,8 +57,8 @@ func MoveToEnd(list []string, itemToMove string) []string {
 	return list
 }
 
+// FindBySubstring returns  slice, containing any string that contains the given substring.
 // This is case-insensitive
-// Returns a slice, containing any string that contains the given substring
 func FindBySubstring(list []string, substringToFind string) []string {
 
 	matches := []string{}
