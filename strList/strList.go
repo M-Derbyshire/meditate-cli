@@ -1,4 +1,4 @@
-package strList
+package strlist
 
 import "strings"
 

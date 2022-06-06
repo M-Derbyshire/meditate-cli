@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/M-Derbyshire/meditate-cli/listfile"
-	"github.com/M-Derbyshire/meditate-cli/strList"
+	"github.com/M-Derbyshire/meditate-cli/strlist"
 )
 
 // Help returns the help text for the application
@@ -51,7 +51,7 @@ func Search(listfilePath, substringToFind string) (string, error) {
 		return "", errors.New("Error while loading list: " + err.Error())
 	}
 
-	results := strList.FindBySubstring(fullList, substringToFind)
+	results := strlist.FindBySubstring(fullList, substringToFind)
 	sort.SliceStable(results, func(i, j int) bool {
 		return len(fullList[i]) < len(fullList[j])
 	})
@@ -68,7 +68,7 @@ func Add(listfilePath, newItem string) (string, error) {
 		return "", errors.New("Error while loading list: " + loadErr.Error())
 	}
 
-	if strList.Contains(currentList, newItem) {
+	if strlist.Contains(currentList, newItem) {
 		return "", errors.New("The given item already exists in the list")
 	}
 
@@ -93,7 +93,7 @@ func Remove(listfilePath, itemToRemove string) (string, error) {
 
 	listOriginalLen := len(list)
 
-	list = strList.RemoveFirstInstance(list, itemToRemove)
+	list = strlist.RemoveFirstInstance(list, itemToRemove)
 	if len(list) >= listOriginalLen {
 		return "", errors.New("Item was not found in list")
 	}
@@ -152,7 +152,7 @@ func Choose(listfilePath string) (string, error) {
 		}
 	}
 
-	list = strList.MoveToEnd(list, choice)
+	list = strlist.MoveToEnd(list, choice)
 	saveErr := listfile.ReplaceListInFile(listfilePath, list)
 	if saveErr != nil {
 		return "", errors.New("Error while saving list: " + loadErr.Error())
