@@ -18,7 +18,6 @@ func main() {
 	//The list file needs to be in the same directory as the executable, not in the current console location
 	executablePath, err := os.Executable()
 	listFilePath := filepath.Join(filepath.Dir(executablePath), "meditate_list")
-	// listFilePath = "test.txt"
 
 	if err == nil { //If we have successfully loaded the file path for the list
 
@@ -56,6 +55,8 @@ func main() {
 				}
 			}
 
+		} else {
+			resultText, err = commands.Choose(listFilePath)
 		}
 
 	}
