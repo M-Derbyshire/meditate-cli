@@ -38,7 +38,9 @@ func List(path string) (string, error) {
 		return "", errors.New("Error while loading list: " + err.Error())
 	}
 
-	sort.Strings(list)
+	sort.SliceStable(list, func(i, j int) bool {
+		return strings.ToLower(list[i]) < strings.ToLower(list[j])
+	})
 
 	return strings.Join(list, "\n"), nil
 }
