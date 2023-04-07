@@ -2,6 +2,7 @@ package commands
 
 import (
 	"errors"
+	"math"
 	"math/rand"
 	"sort"
 	"strings"
@@ -114,7 +115,6 @@ func Remove(listfilePath, itemToRemove string) (string, error) {
 func Choose(listfilePath string) (string, error) {
 
 	var choice string
-	var maxChoiceNum uint16 // To be compared against a random number, to determine if an item should be chosen
 
 	list, loadErr := listfile.LoadListFromFile(listfilePath)
 	if loadErr != nil {
@@ -130,28 +130,25 @@ func Choose(listfilePath string) (string, error) {
 	}
 
 	if choice == "" {
-		//We're going to loop through the items, running a random number generator on each one to decide whether or not that should be picked.
-		//The likelyhood that an item will be picked is determined by how many items there are.
-
-		maxChoiceNum = uint16((100 / len(list)) * 16)
 		rand.Seed(time.Now().UnixNano())
 
-		//We only want to loop through the list a certain amount of times. If we haven't chosen anything after that, we'll just choose the first item
-	choiceAttemptLoop:
-		for choiceAttempts := 0; choiceAttempts < 5; choiceAttempts++ {
+		// We want to make a random choice, but the items at the top of the list should have a better chance of being picked
 
-			for _, currentItem := range list {
-				if uint16(rand.Intn(100)) <= maxChoiceNum {
-					choice = currentItem
-					break choiceAttemptLoop
-				}
-			}
+		// First, we want to split the list in two
+		thirdOfListLength := int(math.Floor(float64(len(list) / 3))) // We want to be sure we round down here
+		priorityList := list[:thirdOfListLength]
+		nonPriorityList := list[thirdOfListLength:]
 
+		// We then choose a list to select from (3/4 chance it's the priority one)
+		var chosenList []string
+		if rand.Intn(4) == 0 {
+			chosenList = nonPriorityList
+		} else {
+			chosenList = priorityList
 		}
 
-		if choice == "" {
-			choice = list[0]
-		}
+		// Now choose the item
+		choice = chosenList[rand.Intn(len(chosenList))]
 	}
 
 	list = strlist.MoveToEnd(list, choice)
